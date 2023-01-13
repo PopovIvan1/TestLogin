@@ -1,0 +1,43 @@
+﻿@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+
+<head>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+</head>
+<body>
+    <div class="container" style="position: relative">
+        <div class="row justify-content-md-center">
+            <div class="col-md-4" style="position: absolute; top: 200px" id="content">
+                <div class="form-floating">
+                    <input id="userName" class="form-control" />
+                    <label class="form-label">Username</label>
+                </div>
+                <div class="form-floating">
+                    <input id="password" class="form-control" />
+                    <label class="form-label">Password</label>
+                </div>
+                <button style="float: right" onclick="tryLogin();">Submit</button>
+            </div>
+            <label id="message"></label>
+        </div>
+    </div>
+</body>
+<script>
+    function tryLogin() {
+        $.ajax({
+            url: "/Home/TryLogin",
+            method: 'GET',
+            data: {
+                userName: document.getElementById('userName').value,
+                password: document.getElementById('password').value
+            },
+            dataType: 'html',
+            success: function (message) {
+                document.getElementById('message').innerHTML = '';
+                document.getElementById('message').insertAdjacentHTML("beforeend", message);
+            }
+        });
+    }
+</script>
